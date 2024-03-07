@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 Item {
-
+    signal updateBalance()
 
     // Color properties
     property color bgColor: '#19343F'
@@ -77,7 +77,9 @@ Item {
             id: redButton
             textValue: '2x'
             function onClick(){
-                console.log("red")
+                var asd = gameManager.get_player
+                asd.place_bet('r', parseInt(inputField.text))
+                updateBalance()
                 gameManager.spin_wheel()
             }
         }
@@ -86,7 +88,9 @@ Item {
             bgColor: 'green'
             textValue: '14x'
             function onClick(){
-                console.log("green")
+                var asd = gameManager.get_player
+                asd.place_bet('g', parseInt(inputField.text))
+                updateBalance()
                 gameManager.spin_wheel()
             }
         }
@@ -97,7 +101,9 @@ Item {
             function onClick(){
                 var asd = gameManager.get_player
                 asd.place_bet('b', parseInt(inputField.text))
+                updateBalance()
                 gameManager.spin_wheel()
+
             }
         }
     }
