@@ -16,7 +16,9 @@ Window {
 
     // Roulette Table
     RouletteTable{
-
+         onAnimationFinished: {
+            gameManager.check_spin('r', 10) // security problem
+        }
     }
 
     // Balance Text and Icon
@@ -28,7 +30,7 @@ Window {
         font.bold: true
         color: 'white'
         font.pixelSize: 20
-        text: 'Balance:'
+        text: 'Balance: 1000'
     }
 
     InputBetForm{
@@ -36,8 +38,22 @@ Window {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         anchors.rightMargin: 30
-
+       
     }
-
+    Connections{
+        target: gameManager.get_player
+        function onBalanceChanged(number){
+            balanceText.text = "Balance: " + number
+            if(number < 0){
+                balanceText = '0'
+            }
+        }        
+    }
+    Connections{
+        target: gameManager
+        function onIsWon(b){
+            console.log(b)
+        }
+    }
 
 }

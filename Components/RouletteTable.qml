@@ -1,6 +1,7 @@
 import QtQuick 2.15
 
 Item {
+    signal animationFinished()
     implicitWidth: childrenRect.width
     implicitHeight: childrenRect.height
     anchors.verticalCenter: parent.verticalCenter
@@ -22,6 +23,9 @@ Item {
                 duration: 5000
                 running: false
                 easing.type: Easing.OutQuad
+                onFinished: {
+                    animationFinished()
+                }
             }
 
         }
@@ -55,5 +59,6 @@ Item {
             rouletteTable.targetAngle = 360 + 360 + 360 + number
             rotationAnimation.running = true
         }
+        
     }
 }

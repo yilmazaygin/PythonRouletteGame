@@ -77,7 +77,8 @@ Item {
             id: redButton
             textValue: '2x'
             function onClick(){
-
+                console.log("red")
+                gameManager.spin_wheel()
             }
         }
         BetButton{
@@ -85,13 +86,19 @@ Item {
             bgColor: 'green'
             textValue: '14x'
             function onClick(){
-
+                console.log("green")
+                gameManager.spin_wheel()
             }
         }
         BetButton{
             id: blackButton
             bgColor: 'black'
             textValue: '2x'
+            function onClick(){
+                var asd = gameManager.get_player
+                asd.place_bet('b', parseInt(inputField.text))
+                gameManager.spin_wheel()
+            }
         }
     }
 }

@@ -8,16 +8,23 @@ black_numbers = [8,9,10,11,12,13,14]
 values = [0, 14, 7, 13, 6, 12, 5, 11, 4, 10, 3, 9, 2, 8, 1]
 
 # Player class
-class RoulettePlayer():
+class RoulettePlayer(QObject):
+
+    balanceChanged = Signal(int)
+
     def __init__(self):
+        super().__init__()
         self.balance = 1000 
         self.bet = Bet() 
     
     # Place a bet method
+    @Slot(str, int)
     def place_bet(self,color,amount):
+        print(color, amount)
         self.bet.set_color(color)
         self.bet.set_amount(amount)
         self.balance -= amount
+        self.balanceChanged.emit(self.balance)
 
     # Update balance for green color
     def update_balance_g(self):
@@ -41,15 +48,20 @@ class Bet():
 class GameManager(QObject):
 
     randNumberChanged = Signal(int, arguments=["number"])
+    isWon = Signal(bool)
 
     def __init__(self):
         QObject.__init__(self)
         self.r_player = RoulettePlayer() # Roulette player instance
         self.last_spins=[] # storing last plays
     
-    @Slot()
+
     def say_hello(self):
         print("Hello")
+
+    @Property(RoulettePlayer)
+    def get_player(self):
+        return self.r_player
 
     @Slot()
     def spin_wheel(self):
@@ -65,14 +77,14 @@ class GameManager(QObject):
     def check_spin(self, bet_color, round_number):
         if round_number in red_numbers and bet_color == 'r':
             self.r_player.update_balance_n()
-            return True
+            self.isWon.emit(True)
         elif round_number in black_numbers and bet_color == 'b':
             self.r_player.update_balance_n()
-            return True
+            self.isWon.emit(True)
         elif round_number == 0 and bet_color == 'g':
             self.r_player.update_balance_g()
-            return True
-        return False
+            self.isWon.emit(True)
+        self.isWon.emit(False)
     
     # This method represents random numbers in color format
     def get_round_color(self, round_number):

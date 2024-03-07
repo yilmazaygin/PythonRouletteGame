@@ -26,10 +26,10 @@ Item {
             onClicked: {
                 onClick()
             }
-            function onClick(){
-                gameManager.spin_wheel()
-            }
+           
 
         }
+    }
+    function onClick(){
     }
 }
