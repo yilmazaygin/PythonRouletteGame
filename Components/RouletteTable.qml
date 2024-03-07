@@ -7,8 +7,8 @@ Item {
     Image {
         id: rouletteTable
         source: "../images/roulette.png"
-        property real targetAngle: 0
-        property real spinAngle: 0
+        property real targetAngle: 256
+        property real spinAngle: 256
 
         transform: Rotation {
             id: rouletteTableRotation
@@ -17,7 +17,7 @@ Item {
             angle: rouletteTable.targetAngle
             NumberAnimation on angle{
                 id: rotationAnimation
-                from: 0
+                from: 256
                 to: rouletteTable.targetAngle
                 duration: 5000
                 running: false
@@ -29,21 +29,15 @@ Item {
             anchors.fill: parent
             enabled: !rotationAnimation.running
             onClicked: {
-                rouletteTable.targetAngle = Math.floor(Math.random() * 360) + 360 + 360 + 360;
-                rouletteTable.spinAngle = rouletteTable.targetAngle; //
-                rouletteTableRotation.angle = 0;
-                rouletteTableRotation.angle = rouletteTable.targetAngle;
-                rouletteTableRotation.angle = rouletteTable.spinAngle;
-                rotationAnimation.running = true
 
             }
         }
-        onTargetAngleChanged: {
-            rouletteTableRotation.angle = rouletteTable.targetAngle;
-            rouletteTable.spinAngle = 0;
-            rouletteTableRotation.angle = 0;
-            rouletteTableRotation.angle = rouletteTable.targetAngle;
-        }
+//        onTargetAngleChanged: {
+//            rouletteTableRotation.angle = rouletteTable.targetAngle;
+//            rouletteTable.spinAngle = 0;
+//            rouletteTableRotation.angle = 0;
+//            rouletteTableRotation.angle = rouletteTable.targetAngle;
+//        }
     }
 
     Image{
@@ -54,5 +48,12 @@ Item {
         anchors.right: rouletteTable.right
         anchors.rightMargin: 7
         anchors.verticalCenter: parent.verticalCenter
+    }
+    Connections{
+        target: gameManager
+        function onRandNumberChanged(number){
+            rouletteTable.targetAngle = 360 + 360 + 360 + number
+            rotationAnimation.running = true
+        }
     }
 }

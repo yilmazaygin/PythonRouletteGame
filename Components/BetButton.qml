@@ -24,9 +24,12 @@ Item {
         MouseArea{
             anchors.fill: parent
             onClicked: {
+                onClick()
+            }
+            function onClick(){
                 gameManager.spin_wheel()
             }
+
         }
     }
-
 }

@@ -39,10 +39,5 @@ Window {
 
     }
 
-    Connections{
-        target: gameManager
-        function onRand_numberChanged(number){
-            console.log(number)
-        }
-    }
+
 }

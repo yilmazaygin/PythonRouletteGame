@@ -5,6 +5,7 @@ import random
 
 red_numbers = [1,2,3,4,5,6,7]
 black_numbers = [8,9,10,11,12,13,14]
+values = [0, 14, 7, 13, 6, 12, 5, 11, 4, 10, 3, 9, 2, 8, 1]
 
 # Player class
 class RoulettePlayer():
@@ -39,7 +40,7 @@ class Bet():
 # GameManager class
 class GameManager(QObject):
 
-    rand_number = Signal(int, arguments=["number"])
+    randNumberChanged = Signal(int, arguments=["number"])
 
     def __init__(self):
         QObject.__init__(self)
@@ -52,7 +53,12 @@ class GameManager(QObject):
 
     @Slot()
     def spin_wheel(self):
-        self.rand_number.emit(random.randint(0,14))
+        degrees = []
+        for x in  range(0,15):
+            degrees.append(24 * x + 256)
+        a = random.randint(0,14)
+        print(values[a])
+        self.randNumberChanged.emit(degrees[a])
     
     # This method compares players betted color and the spin
     @Slot(str, int)

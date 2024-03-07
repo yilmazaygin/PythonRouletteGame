@@ -76,11 +76,17 @@ Item {
         BetButton{
             id: redButton
             textValue: '2x'
+            function onClick(){
+
+            }
         }
         BetButton{
             id: greenButton
             bgColor: 'green'
             textValue: '14x'
+            function onClick(){
+
+            }
         }
         BetButton{
             id: blackButton
