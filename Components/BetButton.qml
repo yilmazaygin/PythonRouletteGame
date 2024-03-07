@@ -21,6 +21,12 @@ Item {
             font.pixelSize: 20
             text: main.textValue
         }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                gameManager.spin_wheel()
+            }
+        }
     }
 
 }

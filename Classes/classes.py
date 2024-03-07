@@ -1,4 +1,7 @@
+from PySide6.QtCore import Slot, Signal, QObject, Property
+
 import random
+
 
 red_numbers = [1,2,3,4,5,6,7]
 black_numbers = [8,9,10,11,12,13,14]
@@ -34,14 +37,25 @@ class Bet():
         self._amount = amount
 
 # GameManager class
-class GameManager():
+class GameManager(QObject):
+
+    rand_number = Signal(int, arguments=["number"])
+
     def __init__(self):
+        QObject.__init__(self)
         self.r_player = RoulettePlayer() # Roulette player instance
         self.last_spins=[] # storing last plays
+    
+    @Slot()
+    def say_hello(self):
+        print("Hello")
+
+    @Slot()
     def spin_wheel(self):
-        return random.randint(0, 14)
+        self.rand_number.emit(random.randint(0,14))
     
     # This method compares players betted color and the spin
+    @Slot(str, int)
     def check_spin(self, bet_color, round_number):
         if round_number in red_numbers and bet_color == 'r':
             self.r_player.update_balance_n()

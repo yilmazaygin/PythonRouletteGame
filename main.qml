@@ -38,4 +38,11 @@ Window {
         anchors.rightMargin: 30
 
     }
+
+    Connections{
+        target: gameManager
+        function onRand_numberChanged(number){
+            console.log(number)
+        }
+    }
 }
