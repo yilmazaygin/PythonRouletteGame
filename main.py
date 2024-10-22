@@ -2,6 +2,8 @@
 import sys
 from pathlib import Path
 
+# kod degisikligi
+
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
